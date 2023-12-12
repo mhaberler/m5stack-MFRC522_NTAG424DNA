@@ -22,23 +22,39 @@
 #include <Arduino.h>
 #endif
 
+#include <MFRC522Debug.h>
+#include <MFRC522DriverI2C.h>
+#include <MFRC522v2.h>
+#include <SPI.h>
+
 #include <MFRC522_NTAG424DNA.h>
 
-#define SS_PIN 10 // change to 4 for NodeMCU
-#define RST_PIN 9 // change to 5 for NodeMCU
+const uint8_t customAddress = 0x28;
+TwoWire &customI2C = Wire;
 
-MFRC522_NTAG424DNA ntag(SS_PIN, RST_PIN);
+MFRC522DriverI2C driver{customAddress, customI2C};  // Create I2C driver.
+MFRC522_NTAG424DNA ntag{driver};
+
 bool deselectAndWakeupA = false;
 void printHex(byte *buffer, uint16_t bufferSize);
 
 void setup() {
-  Serial.begin(9600);
-  SPI.begin();
+#ifdef M5UNIFIED
+  M5.begin();
+#else
+  Serial.begin(115200);
+#endif
+
+#ifdef STARTUP_DELAY
+  delay(STARTUP_DELAY);
+#endif
+#ifdef I2C0_SDA
+  Wire.begin(I2C0_SDA, I2C0_SCL, I2C9_SPEED);
+#else
+  Wire.begin();
+#endif
   ntag.PCD_Init();
 
-  // wait one second for the Serial to connect (recommended on NodeMCU /
-  // ESP8266, can be removed on Arduino Uno)
-  delay(1000);
   Serial.println(F("POWER ON"));
 }
 
