@@ -1,0 +1,3 @@
+[submodule "lib/MFRC522_NTAG424DNA"]
+	path = lib/MFRC522_NTAG424DNA
+	url = https://github.com/Obsttube/MFRC522_NTAG424DNA.git
