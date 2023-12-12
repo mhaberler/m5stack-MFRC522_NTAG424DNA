@@ -1,3 +1,6 @@
 [submodule "lib/MFRC522_NTAG424DNA"]
 	path = lib/MFRC522_NTAG424DNA
 	url = https://github.com/Obsttube/MFRC522_NTAG424DNA.git
+[submodule "lib/Arduino_MFRC522v2"]
+	path = lib/Arduino_MFRC522v2
+	url = https://github.com/OSSLibraries/Arduino_MFRC522v2.git
